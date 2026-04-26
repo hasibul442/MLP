@@ -1,0 +1,124 @@
+.page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 12% 8%, rgba(58, 123, 255, 0.23), transparent 32%),
+        radial-gradient(circle at 90% 5%, rgba(0, 196, 204, 0.2), transparent 36%),
+        linear-gradient(140deg, #05070d 0%, #0b1220 48%, #08101a 100%);
+    color: #d6e6ff;
+}
+
+.hero {
+    margin-bottom: 2rem;
+}
+
+.badge {
+    background: rgba(15, 25, 44, 0.85) !important;
+    color: #9ec0ff !important;
+    border: 1px solid rgba(109, 155, 255, 0.4) !important;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.12;
+    color: #f3f8ff;
+    font-weight: 800;
+    max-width: 20ch;
+}
+
+.subtitle {
+    margin-top: 0.85rem;
+    max-width: 64ch;
+    color: #a5badf;
+    line-height: 1.7;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.card {
+    height: 100%;
+    border: 1px solid rgba(126, 160, 255, 0.24);
+    border-radius: 1rem;
+    background: linear-gradient(165deg, rgba(14, 22, 40, 0.9), rgba(9, 14, 25, 0.95));
+    padding: 1.2rem;
+    box-shadow: 0 14px 32px rgba(4, 10, 25, 0.35);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(65, 150, 255, 0.52);
+}
+
+.cardHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.iconWrap {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(35, 68, 141, 0.45);
+    color: #8fd6ff;
+    font-weight: 700;
+}
+
+.order {
+    color: #8ea9d3;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.cardTitle {
+    margin-top: 1rem;
+    color: #ecf4ff;
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+
+.cardTitleBn {
+    margin-top: 0.2rem;
+    color: #a9c6f7;
+    font-size: 0.95rem;
+}
+
+.cardDescription {
+    margin-top: 0.8rem;
+    color: #a2b5d8;
+    line-height: 1.6;
+}
+
+.cardAction {
+    margin-top: 1rem;
+    display: inline-flex;
+    color: #67cfff;
+    font-weight: 600;
+}
+
+.emptyBox {
+    border: 1px dashed rgba(132, 162, 238, 0.45);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    background: rgba(8, 14, 26, 0.75);
+}
+
+.emptyBox h2 {
+    color: #edf4ff;
+}
+
+.emptyBox p {
+    margin-top: 0.45rem;
+    color: #9db4db;
+}
