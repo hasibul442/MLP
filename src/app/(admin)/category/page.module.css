@@ -1,0 +1,175 @@
+.main {
+    position: relative;
+    z-index: 1;
+}
+
+.badge {
+    background: rgba(16, 25, 46, 0.86) !important;
+    color: #9DBBFF !important;
+    border: 1px solid rgba(90, 132, 255, 0.4) !important;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+}
+
+.heroTitle {
+    font-size: clamp(2rem, 3.4vw, 3rem) !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+    color: #F7FBFF;
+    max-width: 18ch;
+}
+
+.heroText {
+    margin-top: 1rem;
+    max-width: 52ch;
+    color: #A8B8D8;
+    line-height: 1.7;
+    font-size: 1.02rem;
+}
+
+.primaryBtn {
+    background: linear-gradient(90deg, #2C5FF5, #0D8CD4) !important;
+    color: #FFFFFF !important;
+    border-radius: 0.8rem !important;
+    font-weight: 600 !important;
+    padding-inline: 1.4rem !important;
+}
+
+.secondaryBtn {
+    border-color: rgba(159, 182, 255, 0.5) !important;
+    color: #D2DEFF !important;
+    border-radius: 0.8rem !important;
+    font-weight: 600 !important;
+    padding-inline: 1.2rem !important;
+}
+
+.card {
+    border-radius: 1.3rem !important;
+    border: 1px solid rgba(126, 164, 255, 0.25);
+    background: linear-gradient(165deg, rgba(15, 22, 40, 0.95), rgba(10, 16, 29, 0.85)) !important;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 18px 40px rgba(2, 8, 22, 0.45);
+}
+
+.cardHeading {
+    color: #ECF4FF;
+    font-weight: 700 !important;
+}
+
+.textField :global(.MuiOutlinedInput-root) {
+    background: rgba(10, 16, 29, 0.9);
+    border-radius: 0.9rem;
+    color: #F7FBFF;
+}
+
+.textField :global(.MuiOutlinedInput-notchedOutline) {
+    border-color: rgba(125, 159, 255, 0.35);
+}
+
+.textField :global(.MuiOutlinedInput-root.Mui-focused) {
+    box-shadow: 0 0 0 3px rgba(58, 123, 255, 0.18);
+}
+
+.textField :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+    border-color: #3A7BFF;
+}
+
+.textField :global(.MuiInputLabel-root) {
+    color: #9EB2D8;
+}
+
+.textField :global(.MuiInputLabel-root.Mui-focused) {
+    color: #DBE7FF;
+}
+
+.textField :global(.MuiInputBase-input::placeholder) {
+    color: rgba(158, 178, 216, 0.7);
+    opacity: 1;
+}
+
+.tableContainer {
+    border-radius: 1rem;
+    border: 1px solid rgba(125, 159, 255, 0.2);
+    background: rgba(8, 14, 26, 0.8);
+    overflow: hidden;
+}
+
+.table :global(.MuiTableCell-root) {
+    border-color: rgba(125, 159, 255, 0.15);
+    color: #DBE7FF;
+}
+
+.table :global(.MuiTableCell-head) {
+    background: rgba(12, 22, 40, 0.9);
+    color: #9DBBFF;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.table :global(.MuiTableRow-root:hover) {
+    background: rgba(21, 42, 78, 0.55);
+}
+
+.iconBadge {
+    font-size: 1.4rem;
+}
+
+.code {
+    background: rgba(20, 30, 54, 0.7);
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.4rem;
+    font-size: 0.85rem;
+    color: #9CC2FF;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.orderBadge {
+    background: #1D4ED8;
+    color: #F8FBFF;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    gap: 0.8rem;
+    color: #9EB2D8;
+}
+
+.progress :global(.MuiCircularProgress-circle) {
+    stroke: #3A7BFF;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #9EB2D8;
+}
+
+.emptyIcon {
+    font-size: 2.8rem !important;
+    margin: 0 0 0.3rem 0;
+}
+
+.emptyText {
+    margin: 0;
+}
+
+@media (max-width: 899px) {
+    .page {
+        padding-bottom: 2rem;
+    }
+
+    .heroTitle {
+        max-width: 22ch;
+    }
+}
