@@ -130,7 +130,7 @@ export default function CategoryPage() {
     }
 
     return (
-        <div className={styles.page}>
+        <div className="page-">
             <Container maxWidth="lg" className="py-5">
                 <main className={styles.main}>
                     <section className="row g-4 align-items-stretch mb-4 mb-lg-5">
