@@ -70,6 +70,11 @@ const ProblemSchema = new mongoose.Schema(
       bn: String
     },
 
+    specialInstruction: {
+      type: String,
+      default: ""
+    },
+
     inputs: [InputSchema],
 
     // optional example values for preview/demo

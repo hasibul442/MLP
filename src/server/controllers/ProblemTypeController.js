@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
 import ProblemType from "@/server/models/ProblemType";
 import { genarateSlug } from "@/utils/helper/helper";
+import { formateProblemType } from "../services/ProblemTypeService";
 
 export async function getProblemTypes(req) {
     try {
+        const language = req.headers.get("x-accept-language") || null;
         const problemTypes = await ProblemType.find().sort({ difficulty: 1 });
-        return NextResponse.json(problemTypes, { status: 200 });
+        if (language) {
+            const formattedProblemTypes = await formateProblemType(problemTypes, language);
+            return NextResponse.json(formattedProblemTypes, { status: 200 });
+        } else {
+            return NextResponse.json(problemTypes, { status: 200 });
+        }
     } catch (error) {
         console.error("Error fetching problem types:", error);
         return NextResponse.json({ error: "Failed to fetch problem types" }, { status: 500 });
