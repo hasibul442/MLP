@@ -281,7 +281,7 @@ export default function ProblemPage() {
 
   return (
     <div className="page-background">
-      <Container maxWidth="lg" className="py-5">
+      <Container maxWidth="xl" className="py-5">
         <main className={styles.main}>
           <section className="row g-4 align-items-stretch mb-4 mb-lg-5">
             <div className="col-12 col-lg-12">
