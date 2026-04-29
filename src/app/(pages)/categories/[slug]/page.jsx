@@ -33,7 +33,7 @@ export default async function CategoryDetailsPage({ params }) {
     }
 
     return (
-        <div className={styles.page}>
+        <div>
             <Container maxWidth="md" className="py-5">
                 <div className={styles.panel}>
                     <span className={styles.icon}>{category.icon}</span>
