@@ -39,7 +39,7 @@ export default async function CategoriesPage() {
     const categories = await getCategories();
 
     return (
-        <div className={styles.page}>
+        <div>
             <Container maxWidth="lg" className="py-5">
                 <section className={styles.hero}>
                     <Chip label="Education Categories" className={styles.badge} />
