@@ -16,37 +16,36 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
-const DEFAULT_FORM = {
-  problemType: "",
-  templateEn: "",
-  templateBn: "",
-  descriptionEn: "",
-  descriptionBn: "",
-  specialInstruction: "",
-  inputs: [
-    {
-      key: "",
-      labelEn: "",
-      labelBn: "",
-      type: "number",
-      itemType: "number",
-      minItems: "",
-      maxItems: "",
-      min: "",
-      max: "",
-      required: true,
-    },
-  ],
-  sampleInputsJson: "",
-  isActive: true,
-};
+import { parseNumber, slugify } from "@/utils/helper/admin/helper";
 
 export default function ProblemPage() {
   const [problemTypes, setProblemTypes] = useState([]);
   const [loadingTypes, setLoadingTypes] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState(DEFAULT_FORM);
+  const [form, setForm] = useState({
+    problemType: "",
+    templateEn: "",
+    templateBn: "",
+    descriptionEn: "",
+    descriptionBn: "",
+    specialInstruction: "",
+    inputs: [
+      {
+        key: "",
+        labelEn: "",
+        labelBn: "",
+        type: "number",
+        itemType: "number",
+        minItems: "",
+        maxItems: "",
+        min: "",
+        max: "",
+        required: true,
+      },
+    ],
+    sampleInputsJson: "",
+    isActive: true,
+  });
   const [payloadJsonText, setPayloadJsonText] = useState("");
   const [payloadJsonError, setPayloadJsonError] = useState("");
 
@@ -54,7 +53,7 @@ export default function ProblemPage() {
     async function fetchProblemTypes() {
       try {
         const res = await fetch("/api/v1/problem-type", {
-          headers: { "X-Accept-Language": "en" },
+          headers: { "X-Accept-Language": "bn" },
         });
         const data = await res.json();
         setProblemTypes(data);
@@ -71,15 +70,6 @@ export default function ProblemPage() {
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-  }
-
-  function slugify(value) {
-    return value
-      .toString()
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
   }
 
   function handleSpecialInstructionChange(e) {
@@ -141,11 +131,6 @@ export default function ProblemPage() {
   }
 
   const payload = useMemo(() => {
-    const parseNumber = (value) => {
-      const parsed = Number(value);
-      return Number.isNaN(parsed) ? undefined : parsed;
-    };
-
     const inputDefinitions = form.inputs.map((input) => {
       const minItems = parseNumber(input.minItems);
       const maxItems = parseNumber(input.maxItems);
@@ -215,7 +200,30 @@ export default function ProblemPage() {
         body: JSON.stringify(payload),
       });
       if (res.ok) {
-        setForm(DEFAULT_FORM);
+        setForm({
+          problemType: "",
+          templateEn: "",
+          templateBn: "",
+          descriptionEn: "",
+          descriptionBn: "",
+          specialInstruction: "",
+          inputs: [
+            {
+              key: "",
+              labelEn: "",
+              labelBn: "",
+              type: "number",
+              itemType: "number",
+              minItems: "",
+              maxItems: "",
+              min: "",
+              max: "",
+              required: true,
+            },
+          ],
+          sampleInputsJson: "",
+          isActive: true,
+        });
       }
     } catch (error) {
       console.error("Failed to create problem:", error);
@@ -257,7 +265,20 @@ export default function ProblemPage() {
               required:
                 input.required !== undefined ? Boolean(input.required) : true,
             }))
-          : DEFAULT_FORM.inputs;
+          : [
+              {
+                key: "",
+                labelEn: "",
+                labelBn: "",
+                type: "number",
+                itemType: "number",
+                minItems: "",
+                maxItems: "",
+                min: "",
+                max: "",
+                required: true,
+              },
+            ];
 
       setForm({
         problemType: parsed.problem_type_id || "",
@@ -280,7 +301,7 @@ export default function ProblemPage() {
   }
 
   return (
-    <div className="page-background">
+    <div>
       <Container maxWidth="xl" className="py-5">
         <main className={styles.main}>
           <section className="row g-4 align-items-stretch mb-4 mb-lg-5">
@@ -552,7 +573,7 @@ export default function ProblemPage() {
                                   className={styles.textField}
                                 />
                               </div>
-                              <div className="col-12 col-md-4">
+                              <div className="col-12 col-md-6">
                                 <TextField
                                   id={`input-minItems-${index}`}
                                   label="Min Items"
@@ -570,7 +591,7 @@ export default function ProblemPage() {
                                   className={styles.textField}
                                 />
                               </div>
-                              <div className="col-12 col-md-4">
+                              <div className="col-12 col-md-6">
                                 <TextField
                                   id={`input-maxItems-${index}`}
                                   label="Max Items"
@@ -588,7 +609,7 @@ export default function ProblemPage() {
                                   className={styles.textField}
                                 />
                               </div>
-                              <div className="col-12 col-md-4">
+                              <div className="col-12 col-md-6">
                                 <TextField
                                   id={`input-min-${index}`}
                                   label="Min Value"
@@ -606,7 +627,7 @@ export default function ProblemPage() {
                                   className={styles.textField}
                                 />
                               </div>
-                              <div className="col-12 col-md-4">
+                              <div className="col-12 col-md-6">
                                 <TextField
                                   id={`input-max-${index}`}
                                   label="Max Value"

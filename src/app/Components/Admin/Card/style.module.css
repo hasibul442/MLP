@@ -1,0 +1,21 @@
+/* DetailItem Css Start */
+.detailItem {
+    border-radius: 0.9rem;
+    border: 1px solid rgba(125, 159, 255, 0.2);
+    background: rgba(8, 14, 26, 0.8);
+    padding: 0.9rem 1rem;
+}
+
+.detailLabel {
+    color: #9DBBFF;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+}
+
+.detailValue {
+    color: #E6F1FF;
+    font-weight: 600;
+}
+/* DetailItem Css End */

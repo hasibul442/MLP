@@ -1,0 +1,30 @@
+.badge {
+    background: rgba(16, 25, 46, 0.86) !important;
+    color: #9DBBFF !important;
+    border: 1px solid rgba(90, 132, 255, 0.4) !important;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+}
+
+.heroTitle {
+    font-size: clamp(2rem, 3.4vw, 3rem) !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+    color: #F7FBFF;
+    max-width: 22ch;
+}
+
+.heroText {
+    margin-top: 1rem;
+    max-width: 58ch;
+    color: #A8B8D8;
+    line-height: 1.7;
+    font-size: 1.02rem;
+}
+
+@media (max-width: 899px) {
+    .heroTitle {
+        max-width: 26ch;
+    }
+}

@@ -3,31 +3,6 @@
     z-index: 1;
 }
 
-.badge {
-    background: rgba(16, 25, 46, 0.86) !important;
-    color: #9DBBFF !important;
-    border: 1px solid rgba(90, 132, 255, 0.4) !important;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-}
-
-.heroTitle {
-    font-size: clamp(2rem, 3.4vw, 3rem) !important;
-    line-height: 1.1 !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.02em;
-    color: #F7FBFF;
-    max-width: 22ch;
-}
-
-.heroText {
-    margin-top: 1rem;
-    max-width: 58ch;
-    color: #A8B8D8;
-    line-height: 1.7;
-    font-size: 1.02rem;
-}
-
 .secondaryBtn {
     border-color: rgba(159, 182, 255, 0.5) !important;
     color: #D2DEFF !important;
@@ -58,6 +33,10 @@
     font-size: 0.8rem;
 }
 
+.sectionTest {
+    color: #D8E6FF !important;
+}
+
 .detailGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -77,11 +56,6 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: 0.4rem;
-}
-
-.detailValue {
-    color: #E6F1FF;
-    font-weight: 600;
 }
 
 .inlineInput {
@@ -156,36 +130,8 @@
     word-break: break-word;
 }
 
-.loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 1rem;
-    gap: 0.8rem;
-    color: #9EB2D8;
-}
-
-.progress :global(.MuiCircularProgress-circle) {
-    stroke: #3A7BFF;
-}
-
-.emptyState {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #9EB2D8;
-}
-
-.emptyText {
-    margin: 0;
-}
-
 @media (max-width: 899px) {
     .page {
         padding-bottom: 2rem;
-    }
-
-    .heroTitle {
-        max-width: 26ch;
     }
 }
