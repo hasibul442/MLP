@@ -50,7 +50,7 @@ const highlights = [
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <div>
       <Container maxWidth="lg" className="py-5">
         <main className={styles.main}>
           <section className="row align-items-center g-4 g-lg-5 mb-4 mb-lg-5">
