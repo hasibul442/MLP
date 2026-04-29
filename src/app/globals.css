@@ -55,4 +55,5 @@ a {
         linear-gradient(140deg, #06080F, #0D1322 48%, #081019);
     color: #DBE7FF;
     font-family: var(--font-geist-sans);
+    background-repeat: no-repeat;
 }
