@@ -49,6 +49,7 @@ a {
 }
 .page-background {
     min-height: 100vh;
+    max-height: 100%;
     background:
         radial-gradient(circle at 15% 10%, rgba(40, 98, 255, 0.28), transparent 35%),
         radial-gradient(circle at 85% 0%, rgba(6, 182, 212, 0.2), transparent 32%),
@@ -56,4 +57,5 @@ a {
     color: #DBE7FF;
     font-family: var(--font-geist-sans);
     background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
