@@ -1,16 +1,6 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import MuiThemeProvider from '@/Components/MuiThemeProvider';
 
 export const metadata = {
   title: "MLP - Math Learning Platform",
@@ -19,8 +9,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning={true} data-scroll-behavior="smooth">
-      <body className="page-background">{children}</body>
+    <html lang="en" suppressHydrationWarning={true} data-scroll-behavior="smooth">
+      <body className="page-background">
+        <MuiThemeProvider>
+          {children}
+        </MuiThemeProvider>
+      </body>
     </html>
   );
 }

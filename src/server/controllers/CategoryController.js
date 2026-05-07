@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Category from "@/server/models/Category";
 import { genarateSlug } from "@/utils/helper/helper";
 import { formateCategory } from "../services/CategoryServices";
+import ProblemType from "../models/ProblemType";
 
 export async function getCategories(req, res) {
     try {
@@ -9,7 +10,6 @@ export async function getCategories(req, res) {
         const categories = await Category.find().sort({ order: 1 });
         if (language) {
             const formattedCategories = await formateCategory(categories, language);
-            console.log("Formatted Categories:", formattedCategories);
             return NextResponse.json(formattedCategories, { status: 200 });
         } else {
             return NextResponse.json(categories, { status: 200 });
@@ -43,5 +43,26 @@ export async function createCategory(req) {
     } catch (error) {
         console.error("Error creating category:", error);
         return NextResponse.json({ error: "Failed to create category" }, { status: 500 });
+    }
+}
+
+export async function getCategoryById(id, req) {
+    try {
+        const language = req.headers.get("x-accept-language") || null;
+        let category = await Category.findById(id).lean();
+        const subcat = await ProblemType.find({ categoryId: id }).lean();
+        
+        if (language) {
+            const formattedCategory = await formateCategory([category], language);
+            const formattedSubcat = await formateCategory(subcat, language);
+            formattedCategory[0].problem_types = formattedSubcat;
+            return formattedCategory[0];
+        } else {
+            category.problem_types = subcat;
+            return category;
+        }
+    } catch (error) {
+        console.error("Error fetching category by ID:", error);
+        throw new Error("Failed to fetch category");
     }
 }
