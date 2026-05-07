@@ -1,10 +1,12 @@
+"use client";
 import Link from "next/link";
 import { Chip, Container } from "@mui/material";
 import styles from "./page.module.css";
+import { useEffect, useState } from "react";
 
 async function getCategories() {
     try {
-        const response = await fetch(`${process.env.APPLICATION_URL}/api/v1/category`, {
+        const response = await fetch(`api/v1/category`, {
             cache: "no-store",
             headers: {
                 "x-accept-language": "en",
@@ -35,8 +37,16 @@ async function getCategories() {
     }
 }
 
-export default async function CategoriesPage() {
-    const categories = await getCategories();
+export default function CategoriesPage() {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        async function fetchCategories() {
+            const categories = await getCategories();
+            setCategories(categories);
+        }
+        fetchCategories();
+    }, []);
 
     return (
         <div>
@@ -58,16 +68,15 @@ export default async function CategoriesPage() {
                     <section className="row g-4">
                         {categories.map((category) => (
                             <div className="col-12 col-md-6 col-lg-4" key={category.id}>
-                                <Link href={`/categories/${category.slug}`} className={styles.cardLink}>
-                                    <article className={styles.card}>
+                                <Link href={`/categories/${category.id}`} className={styles.cardLink}>
+                                    <div className={styles.card}>
                                         <div className={styles.cardHead}>
                                             <span className={styles.iconWrap}>{category.icon}</span>
-                                            <span className={styles.order}>Order {category.order}</span>
                                         </div>
                                         <h2 className={styles.cardTitle}>{category.title}</h2>
                                         {/* <p className={styles.cardDescription}>{category.description}</p> */}
                                         <span className={styles.cardAction}>Open Category</span>
-                                    </article>
+                                    </div>
                                 </Link>
                             </div>
                         ))}
