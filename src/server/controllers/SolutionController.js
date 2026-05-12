@@ -6,7 +6,9 @@ import { getMathSolution } from "../services/SolutionServices";
 export async function getSolution(req) {
     const language = req.headers.get("x-accept-language") || null;
     const payload = await req.json();
-    const problems = await Problem.findById(payload.id).lean();
+        const problems = await Problem.findById(payload.id)
+            .populate("problemType")
+            .lean();
 
     if (!problems) {
         return NextResponse.json({ error: "Problem not found" }, { status: 404 });

@@ -1,6 +1,6 @@
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import MuiThemeProvider from '@/Components/MuiThemeProvider';
+import ClientLayout from "./ClientLayout";
 
 export const metadata = {
   title: "MLP - Math Learning Platform",
@@ -10,10 +10,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning={true} data-scroll-behavior="smooth">
-      <body className="page-background">
-        <MuiThemeProvider>
-          {children}
-        </MuiThemeProvider>
+      <body className="page-background" suppressHydrationWarning={true}>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

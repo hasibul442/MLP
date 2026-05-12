@@ -3,12 +3,30 @@ import { NextResponse } from "next/server";
 import Problem from "@/server/models/Problem";
 import ProblemType from "@/server/models/ProblemType";
 import { genarateSlug } from "@/utils/helper/helper";
-import { formateProblemList, getSingleProblemDetails } from "../services/ProblemServices";
+import {
+  formateProblemList,
+  getSingleProblemDetails,
+} from "../services/ProblemServices";
 
 export async function getProblems(req) {
   try {
+    //get type from query
+    const { searchParams } = new URL(req.url);
+    const type = searchParams.get("type");
+    console.log("Fetching problems with type:", type);
+    let query = {};
+    if (type && type !== "all" && type !== "null") {
+      const problemType = await ProblemType.findOne({ _id: type });
+      if (!problemType) {
+        return NextResponse.json(
+          { error: "Invalid problem type" },
+          { status: 400 },
+        );
+      }
+      query.problemType = problemType._id;
+    }
     const language = req.headers.get("x-accept-language") || null;
-    const problems = await Problem.find()
+    const problems = await Problem.find(query)
       .populate("problemType")
       .sort({ createdAt: -1 });
     if (language) {

@@ -1,0 +1,65 @@
+.navbar {
+  background: rgba(8, 14, 26, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(125, 159, 255, 0.15);
+}
+
+.toolbar {
+  padding: 0.5rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logoIcon {
+  color: #3a7bff;
+}
+
+.logoText {
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, #3a7bff, #17b6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navLink {
+  color: #d2deff !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  font-size: 0.95rem !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.navLink:hover {
+  background: rgba(58, 123, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.menuIcon {
+  color: #d2deff !important;
+}
+
+.langButton {
+  color: #d2deff !important;
+  border: 1px solid rgba(159, 182, 255, 0.3) !important;
+  border-radius: 0.5rem !important;
+  padding: 0.4rem 0.8rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.langButton:hover {
+  background: rgba(58, 123, 255, 0.1) !important;
+  border-color: rgba(159, 182, 255, 0.5) !important;
+}

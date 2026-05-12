@@ -23,7 +23,7 @@ async function getProblemDetails(problemId) {
     const response = await fetch(`/api/v1/problem/${problemId}`, {
       cache: "no-store",
       headers: {
-        "x-accept-language": "en",
+        "x-accept-language": "bn",
       },
     });
     if (!response.ok) {
@@ -84,12 +84,9 @@ function SolutionPage() {
         setLoading(true);
         setError(null);
 
-        // Fetch problem details if not already loaded
-        let details = problemDetails;
-        if (!details) {
-          details = await getProblemDetails(problemId);
-          setProblemDetails(details);
-        }
+        // Fetch problem details
+        const details = await getProblemDetails(problemId);
+        setProblemDetails(details);
 
         // Fetch solution
         const solution = await getSolution(
@@ -180,13 +177,13 @@ function SolutionPage() {
               )}
 
               <Typography variant="h4" className={styles.problemTitle}>
-                {problemDetails?.title || "Math Problem"}
+                {problem?.title || "Math Problem"}
               </Typography>
 
               <Divider className={styles.problemDivider} />
 
               {/* Inputs Section */}
-              <Typography variant="h6" className={styles.inputsTitle}>
+              <Typography variant="h6" className="pb-2">
                 Given Values
               </Typography>
               <div className="row g-2">

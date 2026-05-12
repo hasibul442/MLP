@@ -4,7 +4,7 @@ export async function getMathSolution(lang, problem, type, payload) {
   let solution = null;
 
   if (type.solverKey === "solveRatioProportion") {
-    solution = solveRatioProportion(problem, type, payload);
+    solution = solveRatioProportion(problem, payload);
 
     if (solution.success && lang != null) {
       solution = localizeSolutionResponse(solution, lang);
@@ -34,7 +34,8 @@ function localizeProblem(problemData, lang) {
     const problem = {
         id: problemData.id,
         template: problemData.template?.[lang],
-        type: problemData.type,
+        type: problemData.type?.[lang],
+        title: problemData.title?.[lang],
         specialInstruction: problemData.specialInstruction,
         description: problemData.description?.[lang],
     }

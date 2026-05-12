@@ -41,12 +41,6 @@
     margin-bottom: 1.5rem;
 }
 
-.inputsTitle {
-    color: #8fd6ff;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
 .inputBox {
     background: rgba(35, 68, 141, 0.25);
     border: 1px solid rgba(126, 160, 255, 0.24);

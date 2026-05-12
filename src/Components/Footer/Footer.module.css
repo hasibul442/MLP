@@ -1,0 +1,80 @@
+.footer {
+  background: rgba(6, 10, 18, 0.98);
+  border-top: 1px solid rgba(125, 159, 255, 0.15);
+  margin-top: auto;
+}
+
+.brandSection {
+  max-width: 350px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.logoIcon {
+  color: #3a7bff;
+}
+
+.logoText {
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, #3a7bff, #17b6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  color: #8ea6cf !important;
+  line-height: 1.7 !important;
+  font-size: 0.9rem !important;
+}
+
+.socialIcon {
+  color: #d2deff !important;
+  border: 1px solid rgba(159, 182, 255, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.socialIcon:hover {
+  background: rgba(58, 123, 255, 0.15) !important;
+  border-color: rgba(159, 182, 255, 0.5) !important;
+  transform: translateY(-2px);
+}
+
+.footerHeading {
+  color: #ecf4ff !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+
+.footerLink {
+  color: #8ea6cf !important;
+  font-size: 0.9rem !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  display: inline-block;
+}
+
+.footerLink:hover {
+  color: #3a7bff !important;
+  transform: translateX(4px);
+}
+
+.divider {
+  background-color: rgba(125, 159, 255, 0.15) !important;
+  margin: 1.5rem 0 !important;
+}
+
+.copyright {
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.copyrightText {
+  color: #8ea6cf !important;
+  font-size: 0.875rem !important;
+}

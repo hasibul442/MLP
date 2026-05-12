@@ -82,6 +82,11 @@ const ProblemSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed
     },
 
+    class: {
+      type: String,
+      default: ""
+    },
+    
     isActive: {
       type: Boolean,
       default: true

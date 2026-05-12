@@ -172,7 +172,7 @@ export default function ProblemsPage() {
 
                                                 <div className={styles.cardFooter}>
                                                     <div className={`${styles.difficultyBadge} ${styles.difficultyEasy}`}>
-                                                        Easy
+                                                        {problem.specialInstruction}
                                                     </div>
                                                     <span className={styles.cardAction}>Solve →</span>
                                                 </div>
