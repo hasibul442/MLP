@@ -1,0 +1,53 @@
+{
+    "Common": {
+        "welcome": "Welcome to our Math Learning Platform!",
+        "description": "Explore a variety of math problems and learning resources tailored to your needs.",
+        "viewSolvedMath": "View Solved Math",
+        "exploreLearningWays": "Explore Learning Ways"
+    },
+    "Navbar": {
+        "home": "Home",
+        "categories": "Categories",
+        "problems": "Problems",
+        "language": "Language"
+    },
+    "Footer": {
+        "footerDescription": "Your trusted companion for mastering mathematics through interactive learning and comprehensive problem-solving.",
+        "platform": "Platform",
+        "resources": "Resources",
+        "legal": "Legal",
+        "categories": "Categories",
+        "problems": "Problems",
+        "solutions": "Solutions",
+        "about": "About Us",
+        "contact": "Contact",
+        "faq": "FAQ",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "rightsReserved": "All rights reserved."
+    },
+    "Home": {
+        "heroTitle": "Master Math with Interactive Learning",
+        "heroSubtitle": "Explore step-by-step solutions, shortcuts, and visual methods",
+        "getStarted": "Get Started",
+        "exploreCategories": "Explore Categories",
+        "categories": "Categories",
+        "viewAllCategories": "View All Categories",
+        "howItWorksTitle": "How It Works",
+        "howItWorksDescription": "Learn math the smart way with our proven approach",
+        "step1Title": "Choose a Problem",
+        "step1Description": "Browse through various math categories and select any problem",
+        "step2Title": "Select Method",
+        "step2Description": "Pick from multiple solution approaches that suit your learning style",
+        "step3Title": "Learn & Practice",
+        "step3Description": "Follow detailed steps and understand the concept thoroughly",
+        "testimonialsTitle": "What Students Say",
+        "testimonialsSubtitle": "Join thousands of learners improving their math skills",
+        "statsProblems": "Problems Solved",
+        "statsCategories": "Categories",
+        "statsMethods": "Learning Methods",
+        "statsStudents": "Active Learners",
+        "featuresTitle": "Why Choose MLP?",
+        "featuresSubtitle": "Everything you need to excel in mathematics"
+    }
+}
