@@ -13,9 +13,8 @@ import {
   IconButton,
 } from "@mui/material";
 import Link from "next/link";
-import Navbar from "@/Components/Navbar/Navbar";
 import Footer from "@/Components/Footer/Footer";
-import { useTranslations } from "./ClientLayout";
+import { useTranslations } from "../ClientLayout";
 
 // Icons
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -33,6 +32,8 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import PeopleIcon from "@mui/icons-material/People";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import CategoryIcon from "@mui/icons-material/Category";
+import { useLanguageContext } from "@/Context/LanguageContext";
+import { GET } from "@/utils/HttpClient/HttpClient";
 
 const learningMethods = [
   {
@@ -93,22 +94,23 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [floatingOffset, setFloatingOffset] = useState(0);
+  const { language } = useLanguageContext();
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("/api/v1/category");
-        if (response.ok) {
-          const data = await response.json();
-          setCategories(data?.categories?.slice(0, 6) || []);
-        }
+        const data = await GET({
+                    url: `api/v1/category`,
+                    lang: language,
+                });
+          setCategories(data?.slice(0, 6) || []);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
 
     fetchCategories();
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -126,9 +128,7 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.pageWrapper}>
-      <Navbar translations={translations.Navbar} />
-
+    <div>
       {/* Hero Section */}
       <section className={styles.heroSection}>
         <Box className={styles.heroBackground}>
@@ -305,19 +305,19 @@ export default function Home() {
           <div className="row g-3">
             {categories.length > 0 ? (
               categories.map((category) => (
-                <div className="col-12 col-sm-6 col-md-4" key={category._id}>
-                  <Link href={`/categories/${category._id}`} style={{ textDecoration: "none" }}>
+                <div className="col-12 col-sm-6 col-md-4" key={category.id}>
+                  <Link href={`/categories/${category.id}`} style={{ textDecoration: "none" }}>
                     <Card className={styles.categoryCard}>
                       <CardContent>
                         <Box className={styles.categoryIcon}>
                           <CategoryIcon fontSize="large" />
                         </Box>
                         <Typography variant="h6" className={styles.categoryTitle}>
-                          {category.name}
+                          {category.title}
                         </Typography>
-                        <Typography variant="body2" className={styles.categoryDescription}>
+                        {/* <Typography variant="body2" className={styles.categoryDescription}>
                           {category.description || "Explore problems in this category"}
-                        </Typography>
+                        </Typography> */}
                       </CardContent>
                     </Card>
                   </Link>

@@ -1,12 +1,3 @@
-
-/* Page Wrapper */
-.pageWrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(180deg, #0a0e1a 0%, #050810 100%);
-}
-
 /* Hero Section */
 .heroSection {
   padding: 6rem 0 4rem;

@@ -19,15 +19,18 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SchoolIcon from "@mui/icons-material/School";
 import Cookies from "js-cookie";
 import styles from "./Navbar.module.css";
+import { useLanguageContext } from "@/Context/LanguageContext";
 
 export default function Navbar({ translations }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElLang, setAnchorElLang] = useState(null);
   const [currentLang, setCurrentLang] = useState("en");
+  const { setLanguage } = useLanguageContext();
 
   useEffect(() => {
     const savedLang = Cookies.get("language") || "en";
     setCurrentLang(savedLang);
+    setLanguage(savedLang);
   }, []);
 
   const handleOpenNavMenu = (event) => {
@@ -48,9 +51,9 @@ export default function Navbar({ translations }) {
 
   const handleLanguageChange = (lang) => {
     setCurrentLang(lang);
+    setLanguage(lang);
     Cookies.set("language", lang, { expires: 365 });
     handleCloseLangMenu();
-    globalThis.location.reload();
   };
 
   const navLinks = [

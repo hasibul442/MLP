@@ -3,21 +3,15 @@ import Link from "next/link";
 import { Chip, Container } from "@mui/material";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
+import { GET } from "@/utils/HttpClient/HttpClient";
+import { useLanguageContext } from "@/Context/LanguageContext";
 
-async function getCategories() {
+async function getCategories(language) {
     try {
-        const response = await fetch(`api/v1/category`, {
-            cache: "no-store",
-            headers: {
-                "x-accept-language": "en",
-            },
+        const categories = await GET({
+            url: `api/v1/category`,
+            lang: language,
         });
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch categories: ${response.status}`);
-        }
-
-        const categories = await response.json();
 
         if (!Array.isArray(categories)) {
             return [];
@@ -39,14 +33,15 @@ async function getCategories() {
 
 export default function CategoriesPage() {
     const [categories, setCategories] = useState([]);
+    const { language } = useLanguageContext();
 
     useEffect(() => {
         async function fetchCategories() {
-            const categories = await getCategories();
+            const categories = await getCategories(language);
             setCategories(categories);
         }
         fetchCategories();
-    }, []);
+    }, [language]);
 
     return (
         <div>

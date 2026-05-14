@@ -3,20 +3,21 @@
 import MuiThemeProvider from "@/Components/MuiThemeProvider";
 import { Suspense, useState, useEffect } from "react";
 import { NextIntlClientProvider } from "next-intl";
+import { LanguageProvider, useLanguageContext } from "@/Context/LanguageContext";
 import Cookies from "js-cookie";
 
 export { useTranslations } from "next-intl";
 
 function TranslationProvider({ children }) {
   const [messages, setMessages] = useState({});
-  const [locale, setLocale] = useState("en");
+  const { language } = useLanguageContext();
+  const [locale, setLocale] = useState(language);
 
   useEffect(() => {
     const loadTranslations = async () => {
-      const lang = Cookies.get("language") || "en";
-      setLocale(lang);
+      setLocale(language);
       try {
-        const translations = await import(`../../messages/${lang}.json`);
+        const translations = await import(`../../messages/${language}.json`);
         setMessages(translations.default);
       } catch (error) {
         console.error("Error loading translations:", error);
@@ -24,10 +25,14 @@ function TranslationProvider({ children }) {
     };
 
     loadTranslations();
-  }, []);
+  }, [language]);
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider 
+      locale={locale} 
+      messages={messages}
+      timeZone="Asia/Dhaka"
+    >
       {children}
     </NextIntlClientProvider>
   );
@@ -37,9 +42,11 @@ export default function ClientLayout({ children }) {
   return (
     <>
       <MuiThemeProvider>
-        <TranslationProvider>
-          <Suspense fallback={null}>{children}</Suspense>
-        </TranslationProvider>
+        <LanguageProvider>
+          <TranslationProvider>
+            <Suspense fallback={null}>{children}</Suspense>
+          </TranslationProvider>
+        </LanguageProvider>
       </MuiThemeProvider>
     </>
   );

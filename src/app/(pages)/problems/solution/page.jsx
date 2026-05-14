@@ -17,19 +17,15 @@ import {
 import { ArrowBack, Functions, Lightbulb, Info } from "@mui/icons-material";
 import Loading1 from "@/app/Components/Frontend/Loading/Loading1";
 import GoBack1 from "@/app/Components/Frontend/GoBack/GoBack1";
+import { GET } from "@/utils/HttpClient/HttpClient";
+import { useLanguageContext } from "@/Context/LanguageContext";
 
-async function getProblemDetails(problemId) {
+async function getProblemDetails(problemId, lang) {
   try {
-    const response = await fetch(`/api/v1/problem/${problemId}`, {
-      cache: "no-store",
-      headers: {
-        "x-accept-language": "bn",
-      },
+    const data = await GET({
+      url: `/api/v1/problem/${problemId}`,
+      lang: lang,
     });
-    if (!response.ok) {
-      throw new Error("Failed to fetch problem details");
-    }
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching problem details:", error);
@@ -43,7 +39,7 @@ async function getSolution(problemId, inputs, lang) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-accept-language": "bn",
+        "x-accept-language": lang,
       },
       body: JSON.stringify({
         id: problemId,
@@ -71,6 +67,7 @@ function SolutionPage() {
   const [error, setError] = useState(null);
   const [editableInputs, setEditableInputs] = useState({});
   const [calculating, setCalculating] = useState(false);
+  const { language } = useLanguageContext();
 
   useEffect(() => {
     async function fetchData() {
@@ -85,14 +82,14 @@ function SolutionPage() {
         setError(null);
 
         // Fetch problem details
-        const details = await getProblemDetails(problemId);
+        const details = await getProblemDetails(problemId, language);
         setProblemDetails(details);
 
         // Fetch solution
         const solution = await getSolution(
           problemId,
           details.sampleInputs,
-          "en",
+          language,
         );
         setSolutions(solution);
         
@@ -109,7 +106,7 @@ function SolutionPage() {
     }
 
     fetchData();
-  }, [problemId]);
+  }, [problemId, language]);
 
   const handleInputChange = (key, value) => {
     setEditableInputs(prev => ({
@@ -122,7 +119,7 @@ function SolutionPage() {
     try {
       setCalculating(true);
       setError(null);
-      const solution = await getSolution(problemId, editableInputs, "en");
+      const solution = await getSolution(problemId, editableInputs, language);
       setSolutions(solution);
       
       // Sync editable inputs with the new solution's input values
