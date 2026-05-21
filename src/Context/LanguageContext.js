@@ -1,18 +1,32 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import Cookies from "js-cookie";
 
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-    const languageFromCookie = Cookies.get("language") || "en";
-    const [language, setLanguage] = useState(languageFromCookie);
+    const [language, setLanguage] = useState("en");
+    const [isInitialized, setIsInitialized] = useState(false);
 
+    // Load language from cookie only on client side after mount
     useEffect(() => {
-        Cookies.set("language", language, { expires: 365 });
-    }, [language]);
+        const languageFromCookie = Cookies.get("language");
+        if (languageFromCookie && languageFromCookie !== language) {
+            setLanguage(languageFromCookie);
+        }
+        setIsInitialized(true);
+    }, []);
+
+    // Save language to cookie when it changes
+    useEffect(() => {
+        if (isInitialized) {
+            Cookies.set("language", language, { expires: 365 });
+        }
+    }, [language, isInitialized]);
+
+    const value = useMemo(() => ({ language, setLanguage }), [language]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
