@@ -83,10 +83,11 @@ const ProblemSchema = new mongoose.Schema(
     },
 
     class: {
-      type: String,
-      default: ""
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Classes",
+      default: null
     },
-    
+
     isActive: {
       type: Boolean,
       default: true
