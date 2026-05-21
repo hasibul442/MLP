@@ -24,6 +24,7 @@ export default function ProblemPage() {
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     problemType: "",
+    classId: "",
     templateEn: "",
     templateBn: "",
     descriptionEn: "",
@@ -48,6 +49,19 @@ export default function ProblemPage() {
   });
   const [payloadJsonText, setPayloadJsonText] = useState("");
   const [payloadJsonError, setPayloadJsonError] = useState("");
+  const [classes, setClasses] = useState([]);
+
+  const fetchClasses = async () => {
+    try {
+      const res = await fetch("/api/v1/classes", {
+        headers: { "X-Accept-Language": "bn" },
+      });
+      const data = await res.json();
+      setClasses(data);
+    } catch (error) {
+      console.error("Failed to fetch classes:", error);
+    }
+  }
 
   useEffect(() => {
     async function fetchProblemTypes() {
@@ -65,6 +79,7 @@ export default function ProblemPage() {
     }
 
     fetchProblemTypes();
+    fetchClasses();
   }, []);
 
   function handleChange(e) {
@@ -175,6 +190,7 @@ export default function ProblemPage() {
 
     return {
       problem_type_id: form.problemType.trim(),
+      class_id: form.classId.trim(),
       template_en: form.templateEn,
       template_bn: form.templateBn,
       description_en: form.descriptionEn,
@@ -202,6 +218,7 @@ export default function ProblemPage() {
       if (res.ok) {
         setForm({
           problemType: "",
+          classId: "",
           templateEn: "",
           templateBn: "",
           descriptionEn: "",
@@ -282,6 +299,7 @@ export default function ProblemPage() {
 
       setForm({
         problemType: parsed.problem_type_id || "",
+        classId: parsed.class_id || "",
         templateEn: parsed.template_en || "",
         templateBn: parsed.template_bn || "",
         descriptionEn: parsed.description_en || "",
@@ -356,6 +374,25 @@ export default function ProblemPage() {
                             ? "Loading problem types..."
                             : "Select a problem type for this problem."}
                         </Typography>
+                      </div>
+                      <div className="col-12 col-md-6">
+                        <TextField
+                          id="classId"
+                          name="classId"
+                          label="Class"
+                          value={form.classId}
+                          onChange={handleChange}
+                          select
+                          fullWidth
+                          className={styles.textField}
+                        >
+                          <MenuItem value="">Select a class</MenuItem>
+                          {classes.map((cls) => (
+                            <MenuItem key={cls._id || cls.id} value={cls._id || cls.id}>
+                              {cls.class_name}
+                            </MenuItem>
+                          ))}
+                        </TextField>
                       </div>
                       <div className="col-12 col-md-6">
                         <FormControlLabel
