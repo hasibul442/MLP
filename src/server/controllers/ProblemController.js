@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import Problem from "@/server/models/Problem";
 import ProblemType from "@/server/models/ProblemType";
+import Classes from "@/server/models/Classes";
 import { genarateSlug } from "@/utils/helper/helper";
 import {
   formateProblemList,
@@ -13,7 +14,6 @@ export async function getProblems(req) {
     //get type from query
     const { searchParams } = new URL(req.url);
     const type = searchParams.get("type");
-    console.log("Fetching problems with type:", type);
     let query = {};
     if (type && type !== "all" && type !== "null") {
       const problemType = await ProblemType.findOne({ _id: type });
@@ -28,6 +28,7 @@ export async function getProblems(req) {
     const language = req.headers.get("x-accept-language") || null;
     const problems = await Problem.find(query)
       .populate("problemType")
+      .populate("class")
       .sort({ createdAt: -1 });
     if (language) {
       const formattedProblems = await formateProblemList(problems, language);
@@ -60,6 +61,7 @@ export async function createProblem(req) {
 
     const newProblem = new Problem({
       problemType: problemTypeId,
+      class: payload.class_id || null,
       template: {
         en: payload.template_en || "",
         bn: payload.template_bn || "",
