@@ -2,7 +2,6 @@ import { interpolateTemplate } from "@/utils/helper/admin/helper";
 
 export async function formateProblemList(problems, lang) {
   const formatedData = [];
-
   for (const problem of problems) {
     formatedData.push({
       id: problem._id,
@@ -14,6 +13,7 @@ export async function formateProblemList(problems, lang) {
       inputs: formatInputs(problem.inputs, lang),
       sampleInputs: problem.sampleInputs,
       problemType: translateProblemType(problem.problemType, lang),
+      class: translateClass(problem.class, lang),
     });
   }
   return formatedData;
@@ -52,8 +52,18 @@ function translateProblemType(problemType, lang) {
   };
 }
 
+function translateClass(cls, lang) {
+  return {
+    id: cls?._id,
+    class_number: cls?.class_number,
+    class_name: cls?.class_name?.[lang],
+    description: cls?.description?.[lang],
+    slug: cls?.slug,
+  };
+}
+
 export async function getSingleProblemDetails(problem, lang) {
-    
+
     return {
         success: true,
         template: problem.template?.[lang],
