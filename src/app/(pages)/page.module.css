@@ -94,7 +94,7 @@
 }
 
 .badgeText {
-  color: #9dbbff !important;
+  color: #9DBBFF !important;
   font-weight: 600 !important;
   font-size: 0.875rem !important;
   letter-spacing: 0.05em;
@@ -106,7 +106,7 @@
   font-weight: 900 !important;
   line-height: 1.15 !important;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #9dbbff 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #9DBBFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -116,14 +116,12 @@
 }
 
 .heroSubtitle {
-  color: #b8c8e8 !important;
+  color: #B8C8E8 !important;
   font-weight: 400 !important;
   margin-bottom: 2.5rem !important;
   line-height: 1.75 !important;
-  max-width: 650px;
   font-size: 1.15rem !important;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
 }
 
 .heroButtons {
@@ -144,17 +142,17 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #b8c8e8;
+  color: #B8C8E8;
 }
 
 .checkIcon {
-  color: #00d4aa !important;
+  color: #00D4AA !important;
   font-size: 1.25rem !important;
 }
 
 .primaryBtn {
-  background: linear-gradient(90deg, #3a7bff, #17b6ff) !important;
-  color: #f8fbff !important;
+  background: linear-gradient(90deg, #3A7BFF, #17B6FF) !important;
+  color: #F8FBFF !important;
   border-radius: 0.75rem !important;
   font-weight: 600 !important;
   padding: 0.875rem 2rem !important;
@@ -171,7 +169,7 @@
 
 .secondaryBtn {
   border: 2px solid rgba(159, 182, 255, 0.4) !important;
-  color: #d2deff !important;
+  color: #D2DEFF !important;
   border-radius: 0.75rem !important;
   font-weight: 600 !important;
   padding: 0.875rem 2rem !important;
@@ -330,7 +328,7 @@
 
 .floatingIcon {
   font-size: 2rem !important;
-  color: #ffffff;
+  color: #FFFFFF;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
@@ -358,13 +356,13 @@
 
 .statIcon {
   font-size: 2.5rem !important;
-  color: #3a7bff;
+  color: #3A7BFF;
   margin-bottom: 0.5rem;
 }
 
 .statValue {
   font-weight: 800 !important;
-  background: linear-gradient(135deg, #f7fbff 0%, #9dbbff 100%);
+  background: linear-gradient(135deg, #F7FBFF 0%, #9DBBFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -372,7 +370,7 @@
 }
 
 .statLabel {
-  color: #8ea6cf !important;
+  color: #8EA6CF !important;
   font-size: 0.875rem !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -395,20 +393,20 @@
 .sectionTitle {
   font-size: clamp(2rem, 4vw, 2.5rem) !important;
   font-weight: 800 !important;
-  background: linear-gradient(135deg, #f7fbff 0%, #9dbbff 100%);
+  background: linear-gradient(135deg, #F7FBFF 0%, #9DBBFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .sectionSubtitle {
-  color: #a8b8d8 !important;
+  color: #A8B8D8 !important;
   font-size: 1.1rem !important;
   margin-top: 0.5rem !important;
 }
 
 .viewAllBtn {
-  color: #3a7bff !important;
+  color: #3A7BFF !important;
   font-weight: 600 !important;
   text-transform: none !important;
   font-size: 1rem !important;
@@ -443,13 +441,13 @@
 }
 
 .categoryTitle {
-  color: #ecf4ff !important;
+  color: #ECF4FF !important;
   font-weight: 700 !important;
   margin-bottom: 0.5rem !important;
 }
 
 .categoryDescription {
-  color: #8ea6cf !important;
+  color: #8EA6CF !important;
   line-height: 1.6 !important;
 }
 
@@ -481,20 +479,20 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3a7bff, #17b6ff);
+  background: linear-gradient(135deg, #3A7BFF, #17B6FF);
   font-size: 1.75rem;
   font-weight: 800;
   color: #fff;
 }
 
 .stepTitle {
-  color: #ecf4ff !important;
+  color: #ECF4FF !important;
   font-weight: 700 !important;
   margin-bottom: 1rem !important;
 }
 
 .stepDescription {
-  color: #8ea6cf !important;
+  color: #8EA6CF !important;
   line-height: 1.6 !important;
 }
 
@@ -529,7 +527,7 @@
 }
 
 .featureCard .featureTitle {
-  color: #ecf4ff !important;
+  color: #ECF4FF !important;
   font-weight: 700 !important;
   margin-bottom: 0.5rem !important;
 }
@@ -538,7 +536,7 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: #00d4aa;
+  color: #00D4AA;
 }
 
 /* Testimonials Section */
@@ -570,7 +568,7 @@
 }
 
 .testimonialContent {
-  color: #d2deff !important;
+  color: #D2DEFF !important;
   font-weight: 500 !important;
   line-height: 1.8 !important;
   margin: 2rem 0 !important;
@@ -581,13 +579,13 @@
 }
 
 .testimonialName {
-  color: #ecf4ff !important;
+  color: #ECF4FF !important;
   font-weight: 700 !important;
   margin-top: 1.5rem !important;
 }
 
 .testimonialRole {
-  color: #8ea6cf !important;
+  color: #8EA6CF !important;
   font-size: 0.9rem !important;
 }
 
@@ -600,7 +598,7 @@
 }
 
 .testimonialBtn {
-  color: #3a7bff !important;
+  color: #3A7BFF !important;
   border: 1px solid rgba(58, 123, 255, 0.3) !important;
   transition: all 0.2s ease !important;
 }
@@ -624,7 +622,7 @@
 }
 
 .activeDot {
-  background: #3a7bff;
+  background: #3A7BFF;
   width: 28px;
   border-radius: 5px;
 }
@@ -640,7 +638,7 @@
 .ctaTitle {
   font-size: clamp(2rem, 4vw, 2.8rem) !important;
   font-weight: 800 !important;
-  background: linear-gradient(135deg, #f7fbff 0%, #9dbbff 100%);
+  background: linear-gradient(135deg, #F7FBFF 0%, #9DBBFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -648,14 +646,14 @@
 }
 
 .ctaSubtitle {
-  color: #a8b8d8 !important;
+  color: #A8B8D8 !important;
   font-size: 1.1rem !important;
   margin-bottom: 2rem !important;
 }
 
 .ctaBtn {
-  background: linear-gradient(90deg, #3a7bff, #17b6ff) !important;
-  color: #f8fbff !important;
+  background: linear-gradient(90deg, #3A7BFF, #17B6FF) !important;
+  color: #F8FBFF !important;
   border-radius: 0.75rem !important;
   font-weight: 600 !important;
   padding: 1rem 2.5rem !important;
@@ -736,19 +734,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #7fd4ff;
+  color: #7FD4FF;
   background: rgba(36, 65, 130, 0.45);
 }
 
 .featureTitle {
   margin-top: 0.95rem;
-  color: #edf4ff;
+  color: #EDF4FF;
   font-weight: 700 !important;
 }
 
 .featureDescription {
   margin-top: 0.6rem;
-  color: #9eb2d8;
+  color: #9EB2D8;
   line-height: 1.7;
 }
 
