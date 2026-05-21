@@ -39,32 +39,32 @@ const learningMethods = [
   {
     title: "Step-by-Step",
     icon: <AutoStoriesIcon />,
-    color: "#3a7bff",
+    color: "#3A7BFF",
   },
   {
     title: "Quick Solution",
     icon: <FlashOnIcon />,
-    color: "#17b6ff",
+    color: "#17B6FF",
   },
   {
     title: "Shortcuts",
     icon: <InsightsIcon />,
-    color: "#ff6b9d",
+    color: "#FF6B9D",
   },
   {
     title: "Visualization",
     icon: <VisibilityIcon />,
-    color: "#ffb800",
+    color: "#FFB800",
   },
   {
     title: "Formula Based",
     icon: <FunctionsIcon />,
-    color: "#00d4aa",
+    color: "#00D4AA",
   },
   {
     title: "Practice Mode",
     icon: <BoltIcon />,
-    color: "#a855f7",
+    color: "#A855F7",
   },
 ];
 
@@ -90,7 +90,7 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const translations = useTranslations();
+  const t = useTranslations();
   const [categories, setCategories] = useState([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [floatingOffset, setFloatingOffset] = useState(0);
@@ -210,20 +210,20 @@ export default function Home() {
               </Typography>
             </Box>
             <Typography variant="h1" className={styles.heroTitle}>
-              {translations.Home?.heroTitle || "Master Math with Interactive Learning"}
+              {t("Home.heroTitle")}
             </Typography>
             <Typography variant="h6" className={styles.heroSubtitle}>
-              {translations.Home?.heroSubtitle || "Explore step-by-step solutions, shortcuts, and visual methods to excel in mathematics"}
+              {t("Home.heroSubtitle")}
             </Typography>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} className={styles.heroButtons}>
               <Link href="/problems" passHref>
                 <Button variant="contained" size="large" className={styles.primaryBtn} endIcon={<ArrowForwardIcon />}>
-                  {translations.Home?.getStarted || "Get Started"}
+                  {t("Home.getStarted")}
                 </Button>
               </Link>
               <Link href="/categories" passHref>
                 <Button variant="outlined" size="large" className={styles.secondaryBtn}>
-                  {translations.Home?.exploreCategories || "Explore Categories"}
+                  {t("Home.exploreCategories")}
                 </Button>
               </Link>
             </Stack>
@@ -254,7 +254,7 @@ export default function Home() {
                 <LibraryBooksIcon className={styles.statIcon} />
                 <Typography variant="h3" className={styles.statValue}>480+</Typography>
                 <Typography variant="body2" className={styles.statLabel}>
-                  {translations.Home?.statsProblems || "Problems Solved"}
+                  {t("Home.statsProblems")}
                 </Typography>
               </Box>
             </div>
@@ -263,7 +263,7 @@ export default function Home() {
                 <CategoryIcon className={styles.statIcon} />
                 <Typography variant="h3" className={styles.statValue}>12+</Typography>
                 <Typography variant="body2" className={styles.statLabel}>
-                  {translations.Home?.statsCategories || "Categories"}
+                  {t("Home.statsCategories")}
                 </Typography>
               </Box>
             </div>
@@ -272,7 +272,7 @@ export default function Home() {
                 <TrendingUpIcon className={styles.statIcon} />
                 <Typography variant="h3" className={styles.statValue}>6</Typography>
                 <Typography variant="body2" className={styles.statLabel}>
-                  {translations.Home?.statsMethods || "Learning Methods"}
+                  {t("Home.statsMethods")}
                 </Typography>
               </Box>
             </div>
@@ -281,7 +281,7 @@ export default function Home() {
                 <PeopleIcon className={styles.statIcon} />
                 <Typography variant="h3" className={styles.statValue}>5K+</Typography>
                 <Typography variant="body2" className={styles.statLabel}>
-                  {translations.Home?.statsStudents || "Active Learners"}
+                  {t("Home.statsStudents")}
                 </Typography>
               </Box>
             </div>
@@ -294,11 +294,11 @@ export default function Home() {
         <Container maxWidth="lg">
           <Box className={styles.sectionHeader}>
             <Typography variant="h3" className={styles.sectionTitle}>
-              {translations.Home?.categories || "Math Categories"}
+              {t("Home.categories")}
             </Typography>
             <Link href="/categories" passHref>
               <Button variant="text" className={styles.viewAllBtn} endIcon={<ArrowForwardIcon />}>
-                {translations.Home?.viewAllCategories || "View All"}
+                {t("Home.viewAllCategories")}
               </Button>
             </Link>
           </Box>
@@ -348,10 +348,10 @@ export default function Home() {
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" className={styles.sectionTitle}>
-              {translations.Home?.howItWorksTitle || "How It Works"}
+              {t("Home.howItWorksTitle")}
             </Typography>
             <Typography variant="body1" className={styles.sectionSubtitle}>
-              {translations.Home?.howItWorksDescription || "Learn math the smart way"}
+              {t("Home.howItWorksDescription")}
             </Typography>
           </Box>
           <div className="row g-4">
@@ -359,10 +359,10 @@ export default function Home() {
               <Box className={styles.stepCard}>
                 <Box className={styles.stepNumber}>1</Box>
                 <Typography variant="h6" className={styles.stepTitle}>
-                  {translations.Home?.step1Title || "Choose a Problem"}
+                  {t("Home.step1Title")}
                 </Typography>
                 <Typography variant="body2" className={styles.stepDescription}>
-                  {translations.Home?.step1Description || "Browse through various math categories"}
+                  {t("Home.step1Description")}
                 </Typography>
               </Box>
             </div>
@@ -370,10 +370,10 @@ export default function Home() {
               <Box className={styles.stepCard}>
                 <Box className={styles.stepNumber}>2</Box>
                 <Typography variant="h6" className={styles.stepTitle}>
-                  {translations.Home?.step2Title || "Select Method"}
+                  {t("Home.step2Title")}
                 </Typography>
                 <Typography variant="body2" className={styles.stepDescription}>
-                  {translations.Home?.step2Description || "Pick from multiple solution approaches"}
+                  {t("Home.step2Description")}
                 </Typography>
               </Box>
             </div>
@@ -381,10 +381,10 @@ export default function Home() {
               <Box className={styles.stepCard}>
                 <Box className={styles.stepNumber}>3</Box>
                 <Typography variant="h6" className={styles.stepTitle}>
-                  {translations.Home?.step3Title || "Learn & Practice"}
+                  {t("Home.step3Title")}
                 </Typography>
                 <Typography variant="body2" className={styles.stepDescription}>
-                  {translations.Home?.step3Description || "Follow detailed steps"}
+                  {t("Home.step3Description")}
                 </Typography>
               </Box>
             </div>
@@ -397,10 +397,10 @@ export default function Home() {
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" className={styles.sectionTitle}>
-              {translations.Home?.featuresTitle || "Why Choose MLP?"}
+              {t("Home.featuresTitle")}
             </Typography>
             <Typography variant="body1" className={styles.sectionSubtitle}>
-              {translations.Home?.featuresSubtitle || "Everything you need to excel"}
+              {t("Home.featuresSubtitle")}
             </Typography>
           </Box>
           <div className="row g-3">
@@ -430,10 +430,10 @@ export default function Home() {
         <Container maxWidth="md">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography variant="h3" className={styles.sectionTitle}>
-              {translations.Home?.testimonialsTitle || "What Students Say"}
+              {t("Home.testimonialsTitle")}
             </Typography>
             <Typography variant="body1" className={styles.sectionSubtitle}>
-              {translations.Home?.testimonialsSubtitle || "Join thousands of learners"}
+              {t("Home.testimonialsSubtitle")}
             </Typography>
           </Box>
           <Box className={styles.testimonialSlider}>
@@ -486,7 +486,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <Footer translations={translations.Footer} />
+      <Footer />
     </div>
   );
 }
