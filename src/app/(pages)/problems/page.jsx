@@ -97,7 +97,7 @@ export default function ProblemsPage() {
         {/* Error State */}
         {error && !loading && (
           <div className={styles.errorBox}>
-            <h2>❌ Error Loading Problems</h2>
+            <h2>:x: Error Loading Problems</h2>
             <p>{error}</p>
           </div>
         )}
@@ -164,7 +164,7 @@ export default function ProblemsPage() {
                           {problem.problemType && (
                             <span className={styles.problemType}>
                               <span className={styles.problemIcon}>
-                                {problem.problemType.icon || "🧮"}
+                                {problem.problemType.icon || ":abacus:"}
                               </span>
                               {problem.problemType.title || ""}
                             </span>
@@ -176,10 +176,15 @@ export default function ProblemsPage() {
                         </h3>
 
                         <div className={styles.cardFooter}>
-                          <div
+                          {/* <div
                             className={`${styles.difficultyBadge} ${styles.difficultyEasy}`}
                           >
                             {problem.specialInstruction}
+                          </div> */}
+                          <div
+                            className={`${styles.difficultyBadge} ${styles.difficultyEasy}`}
+                          >
+                            {problem?.class?.class_name || "Class"}
                           </div>
                           <span className={styles.cardAction}>Solve →</span>
                         </div>
