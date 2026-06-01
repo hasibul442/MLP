@@ -2,89 +2,115 @@ import { solveRatioProportion } from "../solution/ratio/solveRatioProportion";
 import { getMathSolutionByAI } from "./AISolutionServices";
 import Solution from "../models/Solution.js";
 
-export async function getMathSolution(lang, problem, type, payload) {
+export async function getMathSolution(lang, question, type, payload) {
   let solution = null;
   // First try to check from database if there is already a verified solution for the problem and input combination and then show the response from db.
-  const getSolutionFromDb = Solution.findOne({
-    problemId: problem?._id || problem?.id,
-  }).sort({ updatedAt: -1 });
+  const query = {
+    problemId: question?._id || question?.id,
+  };
+  const getSolutionFromDb = await Solution.findOne(query).populate("problemId").populate("problemTypeId").sort({ updatedAt: -1 });
 
   if (getSolutionFromDb) {
-    solution = getSolutionFromDb;
+    // Transform the data to rename problemId to problem and problemTypeId to problemType
+    const solutionObj = getSolutionFromDb.toObject();
+    solution = {
+      ...solutionObj,
+      problem: solutionObj.problemId,
+      problemType: solutionObj.problemTypeId,
+      problemId: undefined,
+      problemTypeId: undefined
+    };
   } else {
     // If there is no verified solution in database then call AI to get the solution and show to user.
-    solution = await getMathSolutionByAI(problem, payload);
+    solution = await getMathSolutionByAI(question, payload);
   }
-  // if (type.solverKey === "solveRatioProportion") {
-  //   // solution = solveRatioProportion(problem, payload);
 
-  //   if (solution.success && lang != null) {
-  //     solution = localizeSolutionResponse(solution, lang);
-  //   }
-  // } else {
-  //   solution = {
-  //     success: false,
-  //     error: {
-  //       message: "No solver found for the given problem type",
-  //       code: "NO_SOLVER_FOUND",
-  //     },
-  //   };
-  // }
+    if (solution && lang != null) {
+      solution = localizeSolutionResponse(solution, lang);
+    } else {
+    solution = {
+      success: false,
+      error: {
+        message: "No solver found for the given problem type",
+        code: "NO_SOLVER_FOUND",
+      },
+    };
+  }
   return solution;
 }
 
 function localizeSolutionResponse(solution, lang) {
+  // console.log(JSON.stringify(solution, null, 2));
   const loc_problem = localizeProblem(solution?.problem, lang);
-  const loc_input = localizeInput(solution?.inputs, lang);
-  const loc_sol = localizeSolution(solution?.solution, lang);
+  const loc_input = localizeInput(solution?.problem?.inputs, lang);
+  const loc_problemtype = localizeProblemType(solution?.problemType, lang);
+  const loc_steps = localizeSteps(solution?.steps, lang);
+
   solution.problem = loc_problem;
   solution.inputs = loc_input;
-  solution.solution = loc_sol;
+  solution.problemType = loc_problemtype;
+  solution.steps = loc_steps;
+
+  solution.method = solution?.method?.[lang];
+  solution.explanation = solution?.explanation?.[lang];
+  solution.shortcutFormulaTemplate = solution?.shortcutFormulaTemplate?.[lang];
+  solution.htmlTemplate = solution?.htmlTemplate?.[lang];
+  solution.summaryTemplate = solution?.summaryTemplate?.[lang];
+  solution.answerTemplate = solution?.answerTemplate?.[lang];
+  solution.sampleInputs = solution?.problem.sampleInputs || null;
+
   return solution;
 }
 function localizeProblem(problemData, lang) {
   const problem = {
-    id: problemData.id,
-    template: problemData.template?.[lang],
-    type: problemData.type?.[lang],
-    title: problemData.title?.[lang],
-    specialInstruction: problemData.specialInstruction,
-    description: problemData.description?.[lang],
+    id: problemData?._id,
+    template: problemData?.template?.[lang],
+    type: problemData?.type?.[lang],
+    title: problemData?.title?.[lang],
+    specialInstruction: problemData?.specialInstruction,
+    description: problemData?.description?.[lang],
+    sampleInputs: problemData?.sampleInputs,
   };
   return problem;
 }
-function localizeInput(inputData, lang) {
-  if (!inputData) return null;
 
-  const input = {};
-
-  // Copy all input values except labels
-  Object.keys(inputData).forEach((key) => {
-    if (key === "labels") {
-      // Localize labels
-      const localizedLabels = {};
-      if (inputData.labels) {
-        Object.keys(inputData.labels).forEach((labelKey) => {
-          localizedLabels[labelKey] =
-            inputData.labels[labelKey]?.[lang] || labelKey;
-        });
-      }
-      input.labels = localizedLabels;
-    } else {
-      // Copy numeric/string values as-is
-      input[key] = inputData[key];
-    }
-  });
-
-  return input;
+function localizeProblemType(problemTypeData, lang) {
+  const problemType = {
+    id: problemTypeData?._id,
+    title: problemTypeData?.title?.[lang],
+    description: problemTypeData?.description?.[lang],
+    slug: problemTypeData?.slug,
+    categoryId: problemTypeData?.categoryId,
+    solverKey: problemTypeData?.solverKey,
+    explanationKey: problemTypeData?.explanationKey,
+    storyKey: problemTypeData?.storyKey,
+    visualKey: problemTypeData?.visualKey,
+    difficulty : problemTypeData?.difficulty,
+  };
+  return problemType;
 }
 
-function localizeSolution(solutionData, lang) {
-  const solution = {
-    answer: solutionData.answer,
-    summary: solutionData.summary?.[lang],
-    workingFormula: solutionData.workingFormula,
-    html: solutionData.html?.[lang],
-  };
-  return solution;
+
+function localizeInput(inputData, lang) {
+  if (!inputData || !Array.isArray(inputData)) return null;
+
+  return inputData.map((inputItem) => {
+    return {
+      ...inputItem,
+      label: inputItem.label?.[lang]
+    };
+  });
+}
+
+function localizeSteps(stepsData, lang) {
+  if (!stepsData || !Array.isArray(stepsData)) return null;
+
+  return stepsData.map((step) => {
+    const localizedStep = {
+      ...step,
+      description: step.description?.[lang],
+      formula: step.formula?.[lang],
+    };
+    return localizedStep;
+  });
 }
