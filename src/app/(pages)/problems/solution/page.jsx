@@ -19,6 +19,7 @@ import Loading1 from "@/app/Components/Frontend/Loading/Loading1";
 import GoBack1 from "@/app/Components/Frontend/GoBack/GoBack1";
 import { GET } from "@/utils/HttpClient/HttpClient";
 import { useLanguageContext } from "@/Context/LanguageContext";
+import SolutionTab from "./SolutionTab";
 
 async function getProblemDetails(problemId, lang) {
   try {
@@ -26,6 +27,7 @@ async function getProblemDetails(problemId, lang) {
       url: `/api/v1/problem/${problemId}`,
       lang: lang,
     });
+    console.log("Problem Details:", data);
     return data;
   } catch (error) {
     console.error("Error fetching problem details:", error);
@@ -50,6 +52,7 @@ async function getSolution(problemId, inputs, lang) {
       throw new Error("Failed to fetch solution");
     }
     const data = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.error("Error fetching solution:", error);
@@ -95,7 +98,7 @@ function SolutionPage() {
         
         // Sync editable inputs with the solution's actual input values
         if (solution?.inputs) {
-          const { labels, ...inputValues } = solution.inputs;
+          const { labels, ...inputValues } = solution.sampleInputs;
           setEditableInputs(inputValues);
         }
       } catch (err) {
@@ -142,14 +145,15 @@ function SolutionPage() {
     return (<GoBack1 title="Problem Not Found" message="The specified problem could not be found. Please check the problem ID and try again." />);
   }
 
-  if (!solutions?.success) {
+  if (!solutions) {
     return ( <GoBack1 title="Solution Error" message={solutions?.error?.message || "Failed to generate solution"} /> );
   }
 
-  const { problem, inputs, solution, metadata } = solutions;
+  const { problem, inputs, solution, metadata, sampleInputs } = solutions;
+  
 
   return (
-    <Container maxWidth="xl" className="py-5">
+    <Container maxWidth="lg" className="py-5">
       {/* Back Button */}
       <Button
         variant="text"
@@ -161,20 +165,20 @@ function SolutionPage() {
       </Button>
 
       <div className="row">
-        <div className="col-sm-8">
+        <div className="col-sm-12">
           {/* Problem Card */}
           <Card className={`shadow-lg mb-4 ${styles.problemCard}`}>
             <CardContent className={styles.problemCardContent}>
-              {problem?.type && (
+              {problemDetails?.problemType && (
                 <Chip
                   icon={<Functions />}
-                  label={problem.type}
+                  label={problemDetails?.problemType?.title || "Math Problem"}
                   className={styles.problemTypeChip}
                 />
               )}
 
               <Typography variant="h4" className={styles.problemTitle}>
-                {problem?.title || "Math Problem"}
+                {problemDetails?.title || "Math Problem"}
               </Typography>
 
               <Divider className={styles.problemDivider} />
@@ -184,52 +188,28 @@ function SolutionPage() {
                 Given Values
               </Typography>
               <div className="row g-2">
-                {Object.keys(inputs).map((key) => {
-                  if (key === "labels") return null;
-
-                  const label = inputs.labels?.[key] || key;
-
-                  return (
-                    <div className="col-12 col-sm-6 col-md-4" key={key}>
-                      <Box className={`card h-100 ${styles.inputBox}`}>
-                        <Typography
-                          variant="caption"
-                          className={styles.inputLabel}
-                        >
-                          {label}
-                        </Typography>
-                        <Typography variant="h6" className={styles.inputValue}>
-                          {inputs[key]}
-                        </Typography>
-                      </Box>
-                    </div>
-                  );
-                })}
+                {inputs?.map((input) => (
+                  <div className="col-12 col-sm-6 col-md-4" key={input.key}>
+                    <Box className={`card h-100 ${styles.inputBox}`}>
+                      <Typography
+                        variant="caption"
+                        className={styles.inputLabel}
+                      >
+                        {input.label}
+                      </Typography>
+                      <Typography variant="h6" className={styles.inputValue}>
+                        {sampleInputs[input.key]}
+                      </Typography>
+                    </Box>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
 
           {/* Solution Section */}
-          <Card className={`shadow-lg mb-4 ${styles.solutionCard}`}>
-            <CardHeader
-              avatar={<Lightbulb className={styles.solutionIcon} />}
-              title={
-                <Typography variant="h5" className={styles.solutionTitle}>
-                  Step-by-Step Solution
-                </Typography>
-              }
-              className={styles.solutionCardHeader}
-            />
-            <CardContent className={styles.solutionCardContent}>
-              {/* Render HTML Solution */}
-              {solution?.html && (
-                <Box
-                  className={styles.htmlSolution}
-                  dangerouslySetInnerHTML={{ __html: solution.html }}
-                />
-              )}
-            </CardContent>
-          </Card>
+          <SolutionTab solution={solutions} />
+          
 
           {/* Metadata Card */}
           <Card className={`shadow-lg ${styles.metadataCard}`}>
@@ -295,8 +275,7 @@ function SolutionPage() {
           </Card>
         </div>
 
-        <div className="col-sm-4">
-          {/* Input Controls Card */}
+        {/* <div className="col-sm-4">
           <Card className={`shadow-lg sticky-top ${styles.controlsCard}`}>
             <CardHeader
               avatar={<Functions className={styles.controlsIcon} />}
@@ -313,25 +292,25 @@ function SolutionPage() {
               </Typography>
               
               <div className="mt-3">
-                {problemDetails?.inputs?.map((input) => (
-                  <div key={input.key} className="mb-3">
-                    <label htmlFor={input.key} className={styles.inputFieldLabel}>
-                      {input.label}
+                {problemDetails?.inputs?.map((i) => (
+                  <div key={i.key} className="mb-3">
+                    <label htmlFor={i.key} className={styles.inputFieldLabel}>
+                      {i.label}
                     </label>
                     <input
-                      id={input.key}
+                      id={i.key}
                       type="number"
                       className={`form-control ${styles.inputField}`}
-                      value={editableInputs[input.key] || ''}
-                      onChange={(e) => handleInputChange(input.key, e.target.value)}
-                      min={input.min}
-                      max={input.max}
-                      required={input.required}
+                      value={editableInputs[i.key]}
+                      onChange={(e) => handleInputChange(i.key, e.target.value)}
+                      min={i.min}
+                      max={i.max}
+                      required={i.required}
                       disabled={calculating}
                     />
-                    {input.min !== null && input.max !== null && (
+                    {i.min !== null && i.max !== null && (
                       <small className={styles.inputHint}>
-                        Range: {input.min} - {input.max}
+                        Range: {i.min} - {i.max}
                       </small>
                     )}
                   </div>
@@ -350,7 +329,7 @@ function SolutionPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </Container>
   );

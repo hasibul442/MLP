@@ -1,25 +1,5 @@
 import mongoose from "mongoose";
 
-const StepSchema = new mongoose.Schema(
-  {
-    order: {
-      type: Number,
-      required: true
-    },
-    description: {
-      en: { type: String, required: true },
-      bn: { type: String, required: true }
-    },
-    formula: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
-    },
-    // For template placeholders like {ratio1}, {ratio2}, {total}
-    variables: [String]
-  },
-  { _id: false }
-);
-
 const SolutionSchema = new mongoose.Schema(
   {
     problemId: {
@@ -35,53 +15,15 @@ const SolutionSchema = new mongoose.Schema(
       required: true
     },
 
-    // Solution method/approach
-    method: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
+    solutionEn: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {}
     },
 
-    // Step-by-step solution template
-    steps: [StepSchema],
-
-    // Overall explanation template
-    explanation: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
+    solutionBn: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {}
     },
-
-    // Working formula template with placeholders
-    workingFormulaTemplate: {
-      type: String,
-      default: ""
-    },
-
-    // Shortcut formula or method template
-    shortcutFormulaTemplate: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
-    },
-
-    // HTML template for rendering solution
-    htmlTemplate: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
-    },
-
-    // Summary template
-    summaryTemplate: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
-    },
-
-    // Answer format template (e.g., "The two parts are {part1} and {part2}")
-    answerTemplate: {
-      en: { type: String, default: "" },
-      bn: { type: String, default: "" }
-    },
-
-    // List of all variables used in templates
-    templateVariables: [String],
 
     // Metadata
     solverType: {

@@ -11,7 +11,6 @@ import Solution from "../models/Solution.js";
 export async function getMathSolutionByAI(problem, payload) {
   try {
     const prompt = buildPrompt(problem, payload);
-
     // Try Gemini first
     let aiData = null;
     let provider = null;
@@ -34,7 +33,6 @@ export async function getMathSolutionByAI(problem, payload) {
       try {
         aiData = await callGroq(prompt);
         provider = "groq";
-        console.log("Groq AI success");
       } catch (groqError) {
         console.error("Groq failed:", groqError.message);
         errors.push({ provider: "groq", error: groqError.message });
@@ -49,10 +47,10 @@ export async function getMathSolutionByAI(problem, payload) {
 
     // Save/Update solution in database
     try {
-      await saveSolutionToDatabase(problem, aiData, provider);
+      const s = await saveSolutionToDatabase(problem, aiData, provider);
+      await savePromptToDatabase(problem, s, prompt);
     } catch (dbError) {
       console.error("Failed to save solution to database:", dbError.message);
-      // Don't fail the request if database save fails, just log it
     }
 
     return {
@@ -70,8 +68,15 @@ export async function getMathSolutionByAI(problem, payload) {
         answer: aiData.answer,
         summary: aiData.summary,
         workingFormula: aiData.workingFormula,
-        shortcutFormula: aiData.shortcutFormula,
-        steps: aiData.steps,
+        detailedSolution: aiData.detailedSolution,
+        shortcutSolution: aiData.shortcutSolution,
+        memoryMethod: aiData.memoryMethod,
+        conceptualUnderstanding: aiData.conceptualUnderstanding,
+        visualThinkingMethod: aiData.visualThinkingMethod,
+        alternativeMethod: aiData.alternativeMethod,
+        examStrategyMethod: aiData.examStrategyMethod,
+        mentalMathMethod: aiData.mentalMathMethod,
+        patternRecognitionMethod: aiData.patternRecognitionMethod,
         html: aiData.html,
       },
       metadata: {
@@ -106,9 +111,8 @@ function buildPrompt(problem, payload) {
   const typeTitleEn = problem?.problemType?.title?.en || "";
   const typeTitleBn = problem?.problemType?.title?.bn || "";
 
-  return `You are an expert math tutor fluent in both English and Bangla (Bengali).
-Solve the math problem using the provided input values.
-Generate complete solutions in BOTH languages.
+  return `You are an expert mathematics tutor fluent in both English and Bangla (বাংলা) Your role is not only to solve math problems but also to teach students with different learning styles, The student may be a complete beginner. Therefore, prioritize understanding over brevity. 
+Solve the math problem and return ONLY valid JSON - no markdown, no code fences, no extra text.
 
 Problem Type (English): ${typeTitleEn}
 Problem Type (Bangla): ${typeTitleBn}
@@ -118,48 +122,109 @@ Problem Description (English): ${descriptionEn}
 Problem Description (Bangla): ${descriptionBn}
 Input Payload (JSON): ${JSON.stringify(payload)}
 
-Return ONLY valid JSON with this exact shape:
+CRITICAL JSON REQUIREMENTS (MUST FOLLOW):
+1. Return ONLY raw JSON - no markdown code fences (\`\`\`json), no extra text before or after
+2. All string values MUST have properly escaped quotes: use \\" for quotes inside strings
+3. All backslashes MUST be escaped: use \\\\ 
+4. No trailing commas after last object property or array element
+5. All braces { } and brackets [ ] must be properly matched and closed
+6. Bangla (Unicode) text is allowed but must be inside properly quoted strings
+7. Numbers should NOT be quoted unless they are part of a formula string
+8. Use double quotes " for all JSON keys and string values, never single quotes
+9. Test that your JSON is valid before returning it
+
+TEACHING APPROACH:
+- Assume student is a complete beginner
+- Explain every step clearly in both English and Bangla
+- Show all intermediate calculations
+- Prioritize understanding over brevity
+- Explain WHY each step is performed
+
+GENERATE ALL 9 TEACHING METHODS:
+
+1. detailedSolution: Step-by-step for beginners (steps array with order, description, formula)
+2. shortcutSolution: Fast method for exams/MCQs
+3. memoryMethod: Easy recall trick or mnemonic
+4. conceptualUnderstanding: Why the method works (intuition)
+5. visualThinkingMethod: Text-based visualization (number lines, grids, diagrams)
+6. alternativeMethod: Different valid approach (or explain why primary is optimal)
+7. examStrategyMethod: Time-saving tips, common traps, elimination techniques
+8. mentalMathMethod: Minimal writing, arithmetic shortcuts
+9. patternRecognitionMethod: Recurring patterns for similar problems
+
+REQUIRED JSON OUTPUT STRUCTURE:
+
 {
-  "answer": "final short answer (language neutral or both)",
+  "answer": "final answer as string",
   "summary": {
-    "en": "short explanation in English",
-    "bn": "সংক্ষিপ্ত ব্যাখ্যা বাংলায়"
+    "en": "English summary",
+    "bn": "বাংলা সারাংশ"
   },
-  "workingFormula": "main formula(s) used (can be universal math notation)",
-  "shortcutFormula": {
-    "en": "quick formula or method in English",
-    "bn": "দ্রুত সূত্র বা পদ্ধতি বাংলায়"
-  },
-  "steps": [
-    {
-      "order": 1,
-      "description": {
-        "en": "Step description in English",
-        "bn": "ধাপের বর্ণনা বাংলায়"
-      },
-      "formula": {
-        "en": "Formula or calculation in English",
-        "bn": "সূত্র বা গণনা বাংলায়"
+  "workingFormula": "main formula(s) used",
+  "detailedSolution": {
+    "steps": [
+      {
+        "order": 1,
+        "description": {
+          "en": "step explanation in English",
+          "bn": "ধাপের ব্যাখ্যা বাংলায়"
+        },
+        "formula": {
+          "en": "calculation in English",
+          "bn": "গণনা বাংলায়"
+        }
       }
-    }
-  ],
+    ]
+  },
+  "shortcutSolution": {
+    "en": "fast method in English",
+    "bn": "দ্রুত পদ্ধতি বাংলায়"
+  },
+  "memoryMethod": {
+    "en": "recall trick in English",
+    "bn": "মনে রাখার কৌশল বাংলায়"
+  },
+  "conceptualUnderstanding": {
+    "en": "why it works in English",
+    "bn": "কেন কাজ করে বাংলায়"
+  },
+  "visualThinkingMethod": {
+    "en": "visual explanation in English",
+    "bn": "দৃশ্য ব্যাখ্যা বাংলায়"
+  },
+  "alternativeMethod": {
+    "en": "alternative in English",
+    "bn": "বিকল্প বাংলায়"
+  },
+  "examStrategyMethod": {
+    "en": "exam strategy in English",
+    "bn": "পরীক্ষার কৌশল বাংলায়"
+  },
+  "mentalMathMethod": {
+    "en": "mental math in English",
+    "bn": "মানসিক গণনা বাংলায়"
+  },
+  "patternRecognitionMethod": {
+    "en": "pattern in English",
+    "bn": "প্যাটার্ন বাংলায়"
+  },
   "html": {
-    "en": "clean HTML for step-by-step explanation in English",
-    "bn": "পর্যায়ক্রমে ব্যাখ্যার জন্য পরিষ্কার HTML বাংলায়"
+    "en": "HTML content in English (use only: div, p, ul, li, strong, em, br, table, tr, td)",
+    "bn": "HTML বিষয়বস্তু বাংলায় (শুধুমাত্র ব্যবহার করুন: div, p, ul, li, strong, em, br, table, tr, td)"
   }
 }
 
-Rules:
-- Do all calculations carefully.
-- Keep units and symbols correct.
-- Provide complete solutions in BOTH English (en) and Bangla (bn).
-- steps array must have at least 2-5 steps showing the solution process.
-- Each step should have order (number), description (en/bn), and formula (en/bn).
-- shortcutFormula should be a simple, memorable formula or method students can use.
-- html must be plain safe markup (div, p, ul, li, strong, em, br, table, tr, td).
-- Do not include markdown fences.
-- Do not include extra keys.
-- Ensure Bangla text is grammatically correct and natural.`;
+JSON FORMATTING RULES:
+- Escape quotes in strings: "He said \\"hello\\""
+- Escape backslashes: "Use \\\\ for backslash"  
+- No trailing commas: {"a": 1, "b": 2} NOT {"a": 1, "b": 2,}
+- Close all brackets and braces properly
+- Use double quotes only, never single quotes
+- For multi-line text in strings, use \\n not actual line breaks
+- Ensure all Unicode (Bangla) characters are inside quoted strings
+
+IMPORTANT: Your response must be ONLY the JSON object above. No markdown, no explanations, just raw valid JSON that can be parsed with JSON.parse().
+`;
 }
 
 /**
@@ -180,38 +245,56 @@ async function saveSolutionToDatabase(problem, aiData, provider) {
     return existingSolution;
   }
 
-  // Extract template variables from steps
-  const templateVariables = extractTemplateVariables(aiData);
+  // Extract and separate bilingual steps
+  const bilingualSteps = aiData?.steps || [];
+  const stepsEn = bilingualSteps.map(step => ({
+    order: step.order,
+    description: step.description?.en || "",
+    formula: step.formula?.en || ""
+  }));
+
+  const stepsBn = bilingualSteps.map(step => ({
+    order: step.order,
+    description: step.description?.bn || "",
+    formula: step.formula?.bn || ""
+  }));
 
   // Prepare solution data
   const solutionData = {
     problemId: problemId,
     problemTypeId: problemTypeId,
 
-    // Steps with bilingual content
-    steps: aiData.steps || [],
-
-    // Templates
-    workingFormulaTemplate: aiData.workingFormula || "",
-    shortcutFormulaTemplate: {
-      en: aiData.shortcutFormula?.en || "",
-      bn: aiData.shortcutFormula?.bn || "",
+    solutionEn: {
+      answer: aiData.answer,
+      summary: aiData.summary?.en || "",
+      workingFormula: aiData.workingFormula || "",
+      shortcutFormula: aiData.shortcutFormula?.en || "",
+      steps: stepsEn,
+      html: aiData.html?.en || "",
+      memoryMethod: aiData.memoryMethod?.en || "",
+      conceptualUnderstanding: aiData.conceptualUnderstanding?.en || "",
+      visualThinkingMethod: aiData.visualThinkingMethod?.en || "",
+      alternativeMethod: aiData.alternativeMethod?.en || "",
+      examStrategyMethod: aiData.examStrategyMethod?.en || "",
+      mentalMathMethod: aiData.mentalMathMethod?.en || "",
+      patternRecognitionMethod: aiData.patternRecognitionMethod?.en || "",
     },
-    htmlTemplate: {
-      en: aiData.html?.en || "",
-      bn: aiData.html?.bn || "",
+    solutionBn: {
+      answer: aiData.answer,
+      summary: aiData.summary?.bn || "",
+      workingFormula: aiData.workingFormula || "",
+      shortcutFormula: aiData.shortcutFormula?.bn || "",
+      steps: stepsBn,
+      html: aiData.html?.bn || "",
+      memoryMethod: aiData.memoryMethod?.bn || "",
+      conceptualUnderstanding: aiData.conceptualUnderstanding?.bn || "",
+      visualThinkingMethod: aiData.visualThinkingMethod?.bn || "",
+      alternativeMethod: aiData.alternativeMethod?.bn || "",
+      examStrategyMethod: aiData.examStrategyMethod?.bn || "",
+      mentalMathMethod: aiData.mentalMathMethod?.bn || "",
+      patternRecognitionMethod: aiData.patternRecognitionMethod?.bn || "",
     },
-    summaryTemplate: {
-      en: aiData.summary?.en || "",
-      bn: aiData.summary?.bn || "",
-    },
-    answerTemplate: {
-      en: aiData.answer || "",
-      bn: aiData.answer || "",
-    },
-
-    // Metadata
-    templateVariables: templateVariables,
+    
     solverType: "ai-generated",
     verified: false,
     usageCount: 1,
@@ -224,7 +307,6 @@ async function saveSolutionToDatabase(problem, aiData, provider) {
   // Create new solution
   const result = await Solution.create(solutionData);
 
-  console.log(`New solution created for problem ${problemId}`);
   return result;
 }
 
@@ -250,4 +332,20 @@ function extractTemplateVariables(aiData) {
   }
 
   return Array.from(variables);
+}
+
+
+async function savePromptToDatabase(problem, s, prompt) {
+  try {
+    const Prompt = require("../models/Prompt.js");
+    const promptData = {
+      solutionId: s._id,
+      problemId: problem._id || problem.id,
+      prompt: prompt
+    };
+    await Prompt.create(promptData);
+    console.log(`Prompt saved for problem ${problem._id || problem.id}`);
+  } catch (error) {
+    console.error("Failed to save prompt to database:", error.message);
+  }
 }

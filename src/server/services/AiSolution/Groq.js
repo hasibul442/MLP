@@ -15,6 +15,7 @@ export async function callGroq(prompt) {
     apiKey: process.env.GROQ_API_KEY,
   });
 
+  // console.log("Calling Groq with prompt:", prompt);
   const response = await client.responses.create({
     model: process.env.GROQ_MODEL || "openai/gpt-oss-20b",
     input: prompt,
@@ -41,35 +42,27 @@ export async function callGroq(prompt) {
   }
 
   const parsed = parseJsonSafely(rawText);
-
+  
   return {
-    answer: parsed?.answer ?? "",
+    answer: parsed?.answer,
     summary: {
       en: parsed?.summary?.en ?? "",
       bn: parsed?.summary?.bn ?? "",
     },
     workingFormula: parsed?.workingFormula ?? "",
-    shortcutFormula: {
-      en: parsed?.shortcutFormula?.en ?? "",
-      bn: parsed?.shortcutFormula?.bn ?? "",
-    },
-    steps: Array.isArray(parsed?.steps)
-      ? parsed.steps.map((step) => ({
-          order: step?.order ?? 0,
-          description: {
-            en: step?.description?.en ?? "",
-            bn: step?.description?.bn ?? "",
-          },
-          formula: {
-            en: step?.formula?.en ?? "",
-            bn: step?.formula?.bn ?? "",
-          },
-        }))
-      : [],
+    shortcutFormula: parsed?.shortcutSolution ?? "",
+    steps: parsed?.detailedSolution?.steps,
     html: {
       en: parsed?.html?.en ?? "",
       bn: parsed?.html?.bn ?? "",
     },
+    memoryMethod: parsed?.memoryMethod,
+    conceptualUnderstanding: parsed?.conceptualUnderstanding,
+    visualThinkingMethod: parsed?.visualThinkingMethod,
+    alternativeMethod: parsed?.alternativeMethod,
+    examStrategyMethod: parsed?.examStrategyMethod,
+    mentalMathMethod: parsed?.mentalMathMethod,
+    patternRecognitionMethod: parsed?.patternRecognitionMethod,
   };
 }
 

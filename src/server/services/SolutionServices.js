@@ -1,6 +1,7 @@
 import { solveRatioProportion } from "../solution/ratio/solveRatioProportion";
 import { getMathSolutionByAI } from "./AISolutionServices";
 import Solution from "../models/Solution.js";
+import { interpolateTemplate } from "@/utils/helper/admin/helper";
 
 export async function getMathSolution(lang, question, type, payload) {
   let solution = null;
@@ -40,33 +41,28 @@ export async function getMathSolution(lang, question, type, payload) {
 }
 
 function localizeSolutionResponse(solution, lang) {
-  // console.log(JSON.stringify(solution, null, 2));
+  //Lang Capitalization
+  let langCapitalized = lang.charAt(0).toUpperCase() + lang.slice(1).toLowerCase();
+
   const loc_problem = localizeProblem(solution?.problem, lang);
   const loc_input = localizeInput(solution?.problem?.inputs, lang);
   const loc_problemtype = localizeProblemType(solution?.problemType, lang);
-  const loc_steps = localizeSteps(solution?.steps, lang);
 
-  solution.problem = loc_problem;
-  solution.inputs = loc_input;
-  solution.problemType = loc_problemtype;
-  solution.steps = loc_steps;
+  let sol = {
+     problem: loc_problem,
+     inputs: loc_input,
+     problemType: loc_problemtype,
+      sampleInputs : solution?.problem?.sampleInputs || null,
+      solution : solution?.[`solution${langCapitalized}`] || null
+  }
 
-  solution.method = solution?.method?.[lang];
-  solution.explanation = solution?.explanation?.[lang];
-  solution.shortcutFormulaTemplate = solution?.shortcutFormulaTemplate?.[lang];
-  solution.htmlTemplate = solution?.htmlTemplate?.[lang];
-  solution.summaryTemplate = solution?.summaryTemplate?.[lang];
-  solution.answerTemplate = solution?.answerTemplate?.[lang];
-  solution.sampleInputs = solution?.problem.sampleInputs || null;
-
-  return solution;
+  return sol;
 }
 function localizeProblem(problemData, lang) {
   const problem = {
     id: problemData?._id,
     template: problemData?.template?.[lang],
-    type: problemData?.type?.[lang],
-    title: problemData?.title?.[lang],
+    title: interpolateTemplate(problemData?.template?.[lang], problemData?.sampleInputs),
     specialInstruction: problemData?.specialInstruction,
     description: problemData?.description?.[lang],
     sampleInputs: problemData?.sampleInputs,
