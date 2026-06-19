@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const promptSchema = new mongoose.Schema({
+const PromptSchema = new mongoose.Schema({
     solutionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Solution",
@@ -19,6 +19,4 @@ const promptSchema = new mongoose.Schema({
   }
 });
 
-const Prompt = mongoose.model('Prompt', promptSchema);
-
-module.exports = Prompt;
+export default mongoose.models.Prompt || mongoose.model("Prompt", PromptSchema);

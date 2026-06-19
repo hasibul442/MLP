@@ -7,8 +7,6 @@ import {
   Box,
   Card,
   CardContent,
-  Chip,
-  CircularProgress,
   Container,
   IconButton,
   Table,
@@ -20,6 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import Loading from "@/app/Components/Admin/Loading/Loading";
 import ItemNotFound from "@/app/Components/Admin/NotFound/ItemNotFound";
@@ -107,7 +107,16 @@ export default function ProblemListPage() {
                     aria-label="View problem"
                     size="small"
                   >
-                    <AddRoundedIcon fontSize="small" />
+                    <VisibilityIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    className={styles.secondaryBtn}
+                    component={Link}
+                    href={`/admin/problem/solution/${problem._id}`}
+                    aria-label="View Solution"
+                    size="small"
+                  >
+                    <EmojiObjectsIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
               </TableRow>
